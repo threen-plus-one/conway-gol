@@ -67,6 +67,7 @@ public:
 		DrawRect( x,y,x + width,y + height,c );
 	}
 	void FillCircle( int cx,int cy,int radius,Color c );
+	void DrawCircle( int cx,int cy,int radius,Color c );
 	void DrawLine( int x0,int y0,int x1,int y1,Color c );
 	~Graphics();
 private:

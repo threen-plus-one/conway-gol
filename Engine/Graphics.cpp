@@ -363,9 +363,10 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 
 void Graphics::FillCircle( int cx,int cy,int radius,Color c )
 {
+	radius = std::abs( radius );
 	const int r2 = radius * radius;
 	for( int yy = cy - radius + 1; yy < cy + radius; ++yy )
-	{		
+	{
 		for( int xx = cx - radius + 1; xx < cx + radius; ++xx )
 		{
 			const int dx = cx - xx;
@@ -375,6 +376,27 @@ void Graphics::FillCircle( int cx,int cy,int radius,Color c )
 				PutPixel( xx,yy,c );
 			}
 		}
+	}
+}
+
+void Graphics::DrawCircle( int cx,int cy,int radius,Color c )
+{
+	const int loop_to = int( radius * std::sqrt( 2.0f ) / 2.0f + 0.5f );
+
+	for( int xx = 0; xx <= loop_to; ++xx )
+	{
+		int yy = int( std::sqrtf( float( radius*radius - xx*xx ) ) + 0.5f );
+
+		PutPixel( cx + xx,cy + yy,c ); // One eightth of a circle
+		PutPixel( cx + yy,cy + xx,c ); // Swap x and y to make one quarter
+		// Do that whole thing again mirrored across the x axis (one half)
+		PutPixel( cx - xx,cy + yy,c );
+		PutPixel( cx - yy,cy + xx,c );
+		// Do THAT whole thing again mirrored across the y-axis (a full circle)
+		PutPixel( cx + xx,cy - yy,c );
+		PutPixel( cx + yy,cy - xx,c );
+		PutPixel( cx - xx,cy - yy,c );
+		PutPixel( cx - yy,cy - xx,c );
 	}
 }
 
