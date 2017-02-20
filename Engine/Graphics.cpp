@@ -390,16 +390,12 @@ void Graphics::DrawLine( int x0,int y0,int x1,int y1,Color c )
 		
 		if( y0 > y1 )
 		{
-			int temp = y0;
-			y0 = y1;
-			y1 = temp;
-			temp = x0;
-			x0 = x1;
-			x1 = temp;
+			std::swap( y0,y1 );
+			std::swap( x0,x1 );
 		}
 		for( int yy = y0; yy < y1; ++yy )
 		{
-			int xx = int( m*yy + b );
+			int xx = int( m*yy + b + 0.5f );
 			PutPixel( xx,yy,c );
 		}
 	}
@@ -410,16 +406,12 @@ void Graphics::DrawLine( int x0,int y0,int x1,int y1,Color c )
 
 		if( x0 > x1 )
 		{
-			int temp = y0;
-			y0 = y1;
-			y1 = temp;
-			temp = x0;
-			x0 = x1;
-			x1 = temp;
+			std::swap( y0,y1 );
+			std::swap( x0,x1 );
 		}
 		for( int xx = x0; xx < x1; ++xx )
 		{
-			int yy = int( m*xx + b );
+			int yy = int( m*xx + b + 0.5f );
 			PutPixel( xx,yy,c );
 		}
 	}
