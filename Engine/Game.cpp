@@ -24,7 +24,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	x( 200 ),
+	y( 200 )
 {
 }
 
@@ -38,8 +40,14 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if( wnd.mouse.LeftIsPressed() )
+	{
+		x = wnd.mouse.GetPosX();
+		y = wnd.mouse.GetPosY();
+	}
 }
 
 void Game::ComposeFrame()
 {
+	gfx.DrawLine( 100,100,x,y,Colors::White );
 }

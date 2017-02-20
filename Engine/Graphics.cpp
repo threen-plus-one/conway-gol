@@ -25,6 +25,8 @@
 #include <assert.h>
 #include <string>
 #include <array>
+#include <cstdlib>
+#include <cmath>
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
@@ -372,6 +374,53 @@ void Graphics::FillCircle( int cx,int cy,int radius,Color c )
 			{
 				PutPixel( xx,yy,c );
 			}
+		}
+	}
+}
+
+void Graphics::DrawLine( int x0,int y0,int x1,int y1,Color c )
+{
+	const int dx = x1 - x0;
+	const int dy = y1 - y0;
+	
+	if( std::abs( dy ) > std::abs( dx ) )
+	{
+		const float m = float( dx ) / float( dy );
+		const float b = x0 - m*y0;
+		
+		if( y0 > y1 )
+		{
+			int temp = y0;
+			y0 = y1;
+			y1 = temp;
+			temp = x0;
+			x0 = x1;
+			x1 = temp;
+		}
+		for( int yy = y0; yy < y1; ++yy )
+		{
+			int xx = int( m*yy + b );
+			PutPixel( xx,yy,c );
+		}
+	}
+	else
+	{
+		const float m = float( dy ) / float( dx );
+		const float b = y0 - m*x0;
+
+		if( x0 > x1 )
+		{
+			int temp = y0;
+			y0 = y1;
+			y1 = temp;
+			temp = x0;
+			x0 = x1;
+			x1 = temp;
+		}
+		for( int xx = x0; xx < x1; ++xx )
+		{
+			int yy = int( m*xx + b );
+			PutPixel( xx,yy,c );
 		}
 	}
 }
