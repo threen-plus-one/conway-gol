@@ -23,6 +23,8 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Vec2.h"
+#include "RectF.h"
 
 class Graphics
 {
@@ -69,6 +71,32 @@ public:
 	void FillCircle( int cx,int cy,int radius,Color c );
 	void DrawCircle( int cx,int cy,int radius,Color c );
 	void DrawLine( int x0,int y0,int x1,int y1,Color c );
+
+	// Wrappers
+	void PutPixel( const Vec2& pos,Color c )
+	{
+		PutPixel( int( pos.x ),int( pos.y ),c );
+	}
+	void FillRect( const RectF& rect,Color c )
+	{
+		FillRect( int( rect.left ),int( rect.top ),int( rect.right ),int( rect.bottom ),c );
+	}
+	void DrawRect( const RectF& rect,Color c )
+	{
+		DrawRect( int( rect.left ),int( rect.top ),int( rect.right ),int( rect.bottom ),c );
+	}
+	void FillCircle( const Vec2& ctr,float radius,Color c )
+	{
+		FillCircle( int( ctr.x ),int( ctr.y ),int( radius + 0.5f ),c );
+	}
+	void DrawCircle( const Vec2& ctr,float radius,Color c )
+	{
+		DrawCircle( int( ctr.x ),int( ctr.y ),int( radius + 0.5f ),c );
+	}
+	void DrawLine( const Vec2& a,const Vec2& b,Color c )
+	{
+		DrawLine( int( a.x ),int( a.y ),int( b.x ),int( b.y ),c );
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
