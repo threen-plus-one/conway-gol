@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "GOL.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -34,7 +35,7 @@ public:
 	void Go();
 private:
 	void ComposeFrame();
-	void UpdateModel();
+	void UpdateModel( float delta );
 	/********************************/
 	/*  User Functions              */
 	/********************************/
@@ -44,5 +45,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 	GOL gol;
+	FrameTimer frameTimer;
+	static constexpr float TIMESTEP = 0.0025f;
 	/********************************/
 };
