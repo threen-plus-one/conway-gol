@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	slider( RectF( Vec2( 350.0f,575.0f ),100.0f,20.0f ),1.0f,10.0f,5.0f )
 {
 }
 
@@ -50,9 +51,13 @@ void Game::UpdateModel( float delta )
 		stepTimer -= stepPeriod;
 		gol.Step();
 	}
+
+	slider.Update( wnd.mouse );
+	stepPeriod = 1 / slider.GetValue();
 }
 
 void Game::ComposeFrame()
 {
 	gol.Draw( gfx );
+	slider.Draw( gfx );
 }

@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "GOL.h"
 #include "FrameTimer.h"
+#include "Slider.h"
 
 class Game
 {
@@ -46,6 +47,7 @@ private:
 	/*  User Variables              */
 	GOL gol;
 	FrameTimer frameTimer;
+	Slider slider;
 	static constexpr float TIMESTEP = 0.0025f;
 
 	float stepTimer = 0.0f;
