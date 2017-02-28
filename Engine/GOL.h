@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics.h"
+#include <cassert>
 
 /*
  * Conway's Game of Life
@@ -18,7 +19,16 @@ class GOL
 
 	bool Cell( int x,int y ) const
 	{
-		return board[ GRID_WIDTH * (y % GRID_HEIGHT) + (x % GRID_WIDTH) ];
+		assert( IsInsideBoard( x,y ) );
+		return board[ GRID_WIDTH * y + x ];
+	}
+	bool IsInsideBoard( int x,int y ) const
+	{
+		return
+			x >= 0 &&
+			x < int( Graphics::ScreenWidth ) &&
+			y >= 0 &&
+			y < int( Graphics::ScreenHeight );
 	}
 
 public:

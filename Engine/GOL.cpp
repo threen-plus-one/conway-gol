@@ -26,9 +26,12 @@ void GOL::Step()
 			{
 				for( int j = -1; j <= 1; ++j )
 				{
-					if( Cell( xx + i,yy + j ) )
+					if( IsInsideBoard( xx + i,yy + j ) )
 					{
-						++neighbours;
+						if( Cell( xx + i,yy + j ) )
+						{
+							++neighbours;
+						}
 					}
 				}
 			}
