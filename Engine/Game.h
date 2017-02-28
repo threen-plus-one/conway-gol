@@ -47,5 +47,8 @@ private:
 	GOL gol;
 	FrameTimer frameTimer;
 	static constexpr float TIMESTEP = 0.0025f;
+
+	float stepTimer = 0.0f;
+	float stepPeriod = 1.0f;
 	/********************************/
 };

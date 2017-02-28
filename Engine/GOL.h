@@ -13,6 +13,7 @@ class GOL
 	static constexpr int GRID_HEIGHT = 50;
 	static constexpr int CELL_SIZE = 8;
 	static constexpr int PADDING = 2;
+
 	bool board[ GRID_WIDTH * GRID_HEIGHT ] = { false };
 
 	bool Cell( int x,int y ) const
@@ -23,6 +24,6 @@ class GOL
 public:
 	GOL();
 
-	void Update( float delta );
+	void Step();
 	void Draw( Graphics& gfx ) const;
 };

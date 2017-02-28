@@ -44,7 +44,12 @@ void Game::Go()
 
 void Game::UpdateModel( float delta )
 {
-
+	stepTimer += delta;
+	if( stepTimer >= stepPeriod )
+	{
+		stepTimer -= stepPeriod;
+		gol.Step();
+	}
 }
 
 void Game::ComposeFrame()

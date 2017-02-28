@@ -5,7 +5,7 @@ GOL::GOL()
 {
 	std::random_device rd;
 	std::mt19937 rng( rd() );
-	std::bernoulli_distribution bDist( 0.1 );
+	std::bernoulli_distribution bDist( 0.5 );
 
 	for( bool& b : board )
 	{
@@ -13,8 +13,54 @@ GOL::GOL()
 	}
 }
 
-void GOL::Update( float delta )
+void GOL::Step()
 {
+	bool next[ GRID_WIDTH * GRID_HEIGHT ] = { false };
+
+	for( int yy = 0; yy < GRID_HEIGHT; ++yy )
+	{
+		for( int xx = 0; xx < GRID_WIDTH; ++xx )
+		{
+			int neighbours = 0;
+			for( int i = -1; i <= 1; ++i )
+			{
+				for( int j = -1; j <= 1; ++j )
+				{
+					if( Cell( xx + i,yy + j ) )
+					{
+						++neighbours;
+					}
+				}
+			}
+
+			if( board[ GRID_WIDTH * yy + xx ] )
+			{
+				--neighbours;
+			}
+
+			if( board[ GRID_WIDTH * yy + xx ] && neighbours < 2 )
+			{
+				next[ GRID_WIDTH * yy + xx ] = false;
+			}
+			else if( board[ GRID_WIDTH * yy + xx ] && neighbours > 3 )
+			{
+				next[ GRID_WIDTH * yy + xx ] = false;
+			}
+			else if( !board[ GRID_WIDTH * yy + xx ] && neighbours == 3 )
+			{
+				next[ GRID_WIDTH * yy + xx ] = true;
+			}
+			else
+			{
+				next[ GRID_WIDTH * yy + xx ] = board[ GRID_WIDTH * yy + xx ];
+			}
+		}
+	}
+
+	for( int i = 0; i < GRID_WIDTH * GRID_HEIGHT; ++i )
+	{
+		board[i] = next[i];
+	}
 }
 
 void GOL::Draw( Graphics& gfx ) const
