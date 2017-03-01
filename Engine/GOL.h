@@ -26,9 +26,9 @@ class GOL
 	{
 		return
 			x >= 0 &&
-			x < int( Graphics::ScreenWidth ) &&
+			x < GRID_WIDTH &&
 			y >= 0 &&
-			y < int( Graphics::ScreenHeight );
+			y < GRID_HEIGHT;
 	}
 
 public:
