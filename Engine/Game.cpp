@@ -45,11 +45,31 @@ void Game::Go()
 
 void Game::UpdateModel( float delta )
 {
-	stepTimer += delta;
-	if( stepTimer >= stepPeriod )
+	while( !wnd.kbd.KeyIsEmpty() )
 	{
-		stepTimer -= stepPeriod;
-		gol.Step();
+		const Keyboard::Event e = wnd.kbd.ReadKey();
+		if( e.IsPress() )
+		{
+			switch( e.GetCode() )
+			{
+			case VK_SPACE:
+				paused = !paused;
+				break;
+			case VK_RIGHT:
+				gol.Step();
+				break;
+			}
+		}
+	}
+
+	if( !paused )
+	{
+		stepTimer += delta;
+		if( stepTimer >= stepPeriod )
+		{
+			stepTimer -= stepPeriod;
+			gol.Step();
+		}
 	}
 
 	slider.Update( wnd.mouse );
