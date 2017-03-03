@@ -84,3 +84,11 @@ void GOL::Draw( Graphics& gfx ) const
 		}
 	}
 }
+
+void GOL::Clear()
+{
+	for( bool& b : board )
+	{
+		b = false;
+	}
+}

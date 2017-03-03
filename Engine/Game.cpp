@@ -58,6 +58,9 @@ void Game::UpdateModel( float delta )
 			case VK_RIGHT:
 				gol.Step();
 				break;
+			case VK_DELETE:
+				gol.Clear();
+				break;
 			}
 		}
 	}

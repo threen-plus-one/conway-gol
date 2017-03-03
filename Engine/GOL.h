@@ -36,4 +36,6 @@ public:
 
 	void Step();
 	void Draw( Graphics& gfx ) const;
+
+	void Clear();
 };
