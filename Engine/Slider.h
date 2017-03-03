@@ -7,20 +7,22 @@
 
 class Slider
 {
+	static constexpr float SLIDER_WIDTH = 10.0f;
+	static constexpr float RECT_SHRINK = 2.0f;
 	RectF rect;
+	float sliderX;
 	float minimum;
 	float maximum;
-	float value;
 
 	float Clamp( float newValue )
 	{
-		if( newValue < minimum )
+		if( newValue < rect.left )
 		{
-			return minimum;
+			return rect.left;
 		}
-		else if( newValue > maximum )
+		else if( newValue > rect.right - SLIDER_WIDTH )
 		{
-			return maximum;
+			return rect.right - SLIDER_WIDTH;
 		}
 		else
 		{
