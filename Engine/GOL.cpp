@@ -85,6 +85,13 @@ void GOL::Draw( Graphics& gfx ) const
 	}
 }
 
+RectF GOL::GetRect() const
+{
+	return RectF( Vec2( float( GRID_X ),float( GRID_Y ) ),
+		float( GRID_WIDTH * ( CELL_SIZE + PADDING ) ),
+		float( GRID_HEIGHT * ( CELL_SIZE + PADDING ) ) );
+}
+
 void GOL::Clear()
 {
 	for( bool& b : board )

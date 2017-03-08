@@ -14,6 +14,7 @@ class GOL
 	static constexpr int GRID_HEIGHT = 50;
 	static constexpr int CELL_SIZE = 8;
 	static constexpr int PADDING = 2;
+	static constexpr int BORDER_THICKNESS = 5;
 
 	bool board[ GRID_WIDTH * GRID_HEIGHT ] = { false };
 
@@ -36,6 +37,8 @@ public:
 
 	void Step();
 	void Draw( Graphics& gfx ) const;
+
+	RectF GetRect() const;
 
 	void Clear();
 };
