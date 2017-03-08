@@ -68,6 +68,9 @@ void GOL::Step()
 
 void GOL::Draw( Graphics& gfx ) const
 {
+	const RectF rect = GetRect();
+	gfx.DrawRect( rect.GetExpanded( float( BORDER_THICKNESS + PADDING ) ),Colors::Blue );
+	gfx.FillRect( rect.GetExpanded( float( PADDING ) ),Colors::Black );
 	for( int yy = 0; yy < GRID_HEIGHT; ++yy )
 	{
 		for( int xx = 0; xx < GRID_WIDTH; ++xx )
