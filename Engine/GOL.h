@@ -16,6 +16,9 @@ class GOL
 	static constexpr int PADDING = 2;
 	static constexpr int BORDER_THICKNESS = 10;
 
+	static constexpr Color BACK_COLOR = { 14,15,16 };
+	static constexpr Color BORDER_COLOR = Colors::Blue;
+
 	bool board[ GRID_WIDTH * GRID_HEIGHT ] = { false };
 
 	bool Cell( int x,int y ) const

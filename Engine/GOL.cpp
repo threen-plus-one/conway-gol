@@ -36,26 +36,26 @@ void GOL::Step()
 				}
 			}
 
-			if( board[ GRID_WIDTH * yy + xx ] )
+			if( Cell( xx,yy ) )
 			{
 				--neighbours;
 			}
 
-			if( board[ GRID_WIDTH * yy + xx ] && neighbours < 2 )
+			if( Cell( xx,yy ) && neighbours < 2 )
 			{
 				next[ GRID_WIDTH * yy + xx ] = false;
 			}
-			else if( board[ GRID_WIDTH * yy + xx ] && neighbours > 3 )
+			else if( Cell( xx,yy ) && neighbours > 3 )
 			{
 				next[ GRID_WIDTH * yy + xx ] = false;
 			}
-			else if( !board[ GRID_WIDTH * yy + xx ] && neighbours == 3 )
+			else if( !Cell( xx,yy ) && neighbours == 3 )
 			{
 				next[ GRID_WIDTH * yy + xx ] = true;
 			}
 			else
 			{
-				next[ GRID_WIDTH * yy + xx ] = board[ GRID_WIDTH * yy + xx ];
+				next[ GRID_WIDTH * yy + xx ] = Cell( xx,yy );
 			}
 		}
 	}
@@ -69,8 +69,8 @@ void GOL::Step()
 void GOL::Draw( Graphics& gfx ) const
 {
 	const RectF rect = GetRect();
-	gfx.DrawRect( rect.GetExpanded( float( BORDER_THICKNESS + PADDING ) ),Colors::Blue );
-	gfx.FillRect( rect.GetExpanded( float( PADDING ) ),Colors::Black );
+	gfx.FillRect( rect.GetExpanded( float( BORDER_THICKNESS + PADDING ) ),BORDER_COLOR );
+	gfx.FillRect( rect.GetExpanded( float( PADDING ) ),BACK_COLOR );
 	for( int yy = 0; yy < GRID_HEIGHT; ++yy )
 	{
 		for( int xx = 0; xx < GRID_WIDTH; ++xx )
@@ -78,8 +78,8 @@ void GOL::Draw( Graphics& gfx ) const
 			if( Cell( xx,yy ) )
 			{
 				gfx.FillRectDim(
-					GRID_X + xx * CELL_SIZE + xx * PADDING,
-					GRID_Y + yy * CELL_SIZE + yy * PADDING,
+					GRID_X + xx * CELL_SIZE + xx * PADDING + PADDING / 2,
+					GRID_Y + yy * CELL_SIZE + yy * PADDING + PADDING / 2,
 					CELL_SIZE,
 					CELL_SIZE,
 					Colors::Yellow );
