@@ -56,7 +56,10 @@ void Game::UpdateModel( float delta )
 				paused = !paused;
 				break;
 			case VK_RIGHT:
-				gol.Step();
+				gol.StepForward();
+				break;
+			case VK_LEFT:
+				gol.StepBackward();
 				break;
 			case VK_DELETE:
 				gol.Clear();
@@ -71,7 +74,7 @@ void Game::UpdateModel( float delta )
 		if( stepTimer >= stepPeriod )
 		{
 			stepTimer -= stepPeriod;
-			gol.Step();
+			gol.StepForward();
 		}
 	}
 

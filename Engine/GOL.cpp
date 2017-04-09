@@ -7,62 +7,94 @@ GOL::GOL()
 	std::mt19937 rng( rd() );
 	std::bernoulli_distribution bDist( 0.5 );
 
-	for( bool& b : board )
+	std::unique_ptr<BoardState> init = std::make_unique<BoardState>();
+	for( bool& b : init->board )
 	{
 		b = bDist( rng );
 	}
+
+	states.push_front( std::move( init ) );
+	iter = states.begin();
 }
 
-void GOL::Step()
+void GOL::StepForward()
 {
-	bool next[ GRID_WIDTH * GRID_HEIGHT ] = { false };
-
-	for( int yy = 0; yy < GRID_HEIGHT; ++yy )
+	if( lookingBackward )
 	{
-		for( int xx = 0; xx < GRID_WIDTH; ++xx )
+		--iter;
+		if( iter == states.begin() )
 		{
-			int neighbours = 0;
-			for( int i = -1; i <= 1; ++i )
+			lookingBackward = false;
+		}
+	}
+	else
+	{
+		auto next = std::make_unique<BoardState>();
+
+		for( int yy = 0; yy < GRID_HEIGHT; ++yy )
+		{
+			for( int xx = 0; xx < GRID_WIDTH; ++xx )
 			{
-				for( int j = -1; j <= 1; ++j )
+				int neighbours = 0;
+				for( int i = -1; i <= 1; ++i )
 				{
-					if( IsInsideBoard( xx + i,yy + j ) )
+					for( int j = -1; j <= 1; ++j )
 					{
-						if( Cell( xx + i,yy + j ) )
+						if( IsInsideBoard( xx + i,yy + j ) )
 						{
-							++neighbours;
+							if( Cell( xx + i,yy + j ) )
+							{
+								++neighbours;
+							}
 						}
 					}
 				}
-			}
 
-			if( Cell( xx,yy ) )
-			{
-				--neighbours;
-			}
+				if( Cell( xx,yy ) )
+				{
+					--neighbours;
+				}
 
-			if( Cell( xx,yy ) && neighbours < 2 )
-			{
-				next[ GRID_WIDTH * yy + xx ] = false;
-			}
-			else if( Cell( xx,yy ) && neighbours > 3 )
-			{
-				next[ GRID_WIDTH * yy + xx ] = false;
-			}
-			else if( !Cell( xx,yy ) && neighbours == 3 )
-			{
-				next[ GRID_WIDTH * yy + xx ] = true;
-			}
-			else
-			{
-				next[ GRID_WIDTH * yy + xx ] = Cell( xx,yy );
+				if( Cell( xx,yy ) && neighbours < 2 )
+				{
+					next->board[GRID_WIDTH * yy + xx] = false;
+				}
+				else if( Cell( xx,yy ) && neighbours > 3 )
+				{
+					next->board[GRID_WIDTH * yy + xx] = false;
+				}
+				else if( !Cell( xx,yy ) && neighbours == 3 )
+				{
+					next->board[GRID_WIDTH * yy + xx] = true;
+				}
+				else
+				{
+					next->board[GRID_WIDTH * yy + xx] = Cell( xx,yy );
+				}
 			}
 		}
-	}
 
-	for( int i = 0; i < GRID_WIDTH * GRID_HEIGHT; ++i )
+		states.push_front( std::move( next ) );
+		iter = states.begin();
+
+		if( states.size() > MAX_HISTORY )
+		{
+			states.pop_back();
+			iter = states.begin();
+		}
+	}
+}
+
+void GOL::StepBackward()
+{
+	if( iter != states.end() )
 	{
-		board[i] = next[i];
+		++iter;
+		lookingBackward = true;
+	}
+	else
+	{
+		const int dingdingding = 69;
 	}
 }
 
@@ -97,8 +129,6 @@ RectF GOL::GetRect() const
 
 void GOL::Clear()
 {
-	for( bool& b : board )
-	{
-		b = false;
-	}
+	states.emplace_front( std::make_unique<BoardState>() );
+	iter = states.begin();
 }
