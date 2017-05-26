@@ -87,14 +87,13 @@ void GOL::StepForward()
 
 void GOL::StepBackward()
 {
-	if( iter != states.end() )
+	if( ++iter == states.end() )
 	{
-		++iter;
-		lookingBackward = true;
+		--iter;
 	}
 	else
 	{
-		const int dingdingding = 69;
+		lookingBackward = true;
 	}
 }
 
