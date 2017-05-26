@@ -4,7 +4,8 @@
 #include <cassert>
 #include <memory>
 #include <list>
-#include "Vec2.h"
+#include "Vei2.h"
+#include "RectI.h"
 
 /*
  * Conway's Game of Life
@@ -40,7 +41,7 @@ private:
 	const bool& Cell( int x,int y ) const
 	{
 		assert( IsInsideBoard( x,y ) );
-		return (*iter)->board[GRID_WIDTH * y + x];
+		return (*iter)->board[ GRID_WIDTH * y + x ];
 	}
 	bool IsInsideBoard( int x,int y ) const
 	{
@@ -56,10 +57,10 @@ public:
 
 	void StepForward();
 	void StepBackward();
-	void EditCell( const Vec2& mousePos,bool eraser );
+	void EditCell( const Vei2& mousePos,bool eraser );
 	void Draw( Graphics& gfx ) const;
 
-	RectF GetRect() const;
+	RectI GetRect() const;
 
 	void Clear();
 };

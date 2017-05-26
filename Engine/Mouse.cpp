@@ -20,10 +20,9 @@
  ******************************************************************************************/
 #include "Mouse.h"
 
-
-Vec2 Mouse::GetPos() const
+Vei2 Mouse::GetPos() const
 {
-	return { float( x ),float( y ) };
+	return { x,y };
 }
 
 int Mouse::GetPosX() const

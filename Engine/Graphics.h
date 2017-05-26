@@ -25,6 +25,8 @@
 #include "Colors.h"
 #include "Vec2.h"
 #include "RectF.h"
+#include "Vei2.h"
+#include "RectI.h"
 
 class Graphics
 {
@@ -84,6 +86,14 @@ public:
 	void DrawRect( const RectF& rect,Color c )
 	{
 		DrawRect( int( rect.left ),int( rect.top ),int( rect.right ),int( rect.bottom ),c );
+	}
+	void FillRect( const RectI& rect,Color c )
+	{
+		FillRect( rect.left,rect.top,rect.right,rect.bottom,c );
+	}
+	void DrawRect( const RectI& rect,Color c )
+	{
+		DrawRect( rect.left,rect.top,rect.right,rect.bottom,c );
 	}
 	void FillCircle( const Vec2& ctr,float radius,Color c )
 	{

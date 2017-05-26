@@ -1,5 +1,4 @@
 #include "RectF.h"
-#include "RectF.h"
 
 RectF::RectF( float left_in,float right_in,float top_in,float bottom_in )
 	:
@@ -37,9 +36,9 @@ bool RectF::IsContainedBy( const RectF & other ) const
 bool RectF::Contains( const Vec2& point ) const
 {
 	return
-		point.x > left &&
+		point.x >= left &&
 		point.x < right &&
-		point.y > top &&
+		point.y >= top &&
 		point.y < bottom;
 }
 

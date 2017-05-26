@@ -97,18 +97,18 @@ void GOL::StepBackward()
 	}
 }
 
-void GOL::EditCell( const Vec2& mousePos,bool eraser )
+void GOL::EditCell( const Vei2& mousePos,bool eraser )
 {
-	const Vec2 cell = (mousePos - Vec2( float( GRID_X ),float( GRID_Y ) )) / float( CELL_SIZE + PADDING );
-	assert( IsInsideBoard( int( cell.x ),int( cell.y ) ) );
-	Cell( int( cell.x ),int( cell.y ) ) = !eraser;
+	const Vei2 cell = (mousePos - Vei2( GRID_X,GRID_Y )) / (CELL_SIZE + PADDING);
+	assert( IsInsideBoard( cell.x,cell.y ) );
+	Cell( cell.x,cell.y ) = !eraser;
 }
 
 void GOL::Draw( Graphics& gfx ) const
 {
-	const RectF rect = GetRect();
-	gfx.FillRect( rect.GetExpanded( float( BORDER_THICKNESS + PADDING ) ),BORDER_COLOR );
-	gfx.FillRect( rect.GetExpanded( float( PADDING ) ),BACK_COLOR );
+	const RectI rect = GetRect();
+	gfx.FillRect( rect.GetExpanded( BORDER_THICKNESS + PADDING ),BORDER_COLOR );
+	gfx.FillRect( rect.GetExpanded( PADDING ),BACK_COLOR );
 	for( int yy = 0; yy < GRID_HEIGHT; ++yy )
 	{
 		for( int xx = 0; xx < GRID_WIDTH; ++xx )
@@ -126,11 +126,11 @@ void GOL::Draw( Graphics& gfx ) const
 	}
 }
 
-RectF GOL::GetRect() const
+RectI GOL::GetRect() const
 {
-	return RectF( Vec2( float( GRID_X ),float( GRID_Y ) ),
-		float( GRID_WIDTH * ( CELL_SIZE + PADDING ) ),
-		float( GRID_HEIGHT * ( CELL_SIZE + PADDING ) ) );
+	return RectI( Vei2( GRID_X,GRID_Y ),
+		GRID_WIDTH * ( CELL_SIZE + PADDING ),
+		GRID_HEIGHT * ( CELL_SIZE + PADDING ) );
 }
 
 void GOL::Clear()
