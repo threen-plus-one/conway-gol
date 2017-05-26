@@ -63,8 +63,18 @@ void Game::UpdateModel( float delta )
 				break;
 			case VK_DELETE:
 				gol.Clear();
+				paused = true;
 				break;
 			}
+		}
+	}
+
+	if( wnd.mouse.LeftIsPressed() )
+	{
+		auto pos = wnd.mouse.GetPos();
+		if( gol.GetRect().Contains( pos ) )
+		{
+			gol.EditCell( pos,eraser );
 		}
 	}
 

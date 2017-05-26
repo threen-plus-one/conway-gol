@@ -4,6 +4,7 @@
 #include <cassert>
 #include <memory>
 #include <list>
+#include "Vec2.h"
 
 /*
  * Conway's Game of Life
@@ -31,10 +32,15 @@ private:
 	std::list< std::unique_ptr<BoardState> >::iterator iter;
 	bool lookingBackward = false;
 
-	bool Cell( int x,int y ) const
+	bool& Cell( int x,int y )
 	{
 		assert( IsInsideBoard( x,y ) );
 		return (*iter)->board[ GRID_WIDTH * y + x ];
+	}
+	const bool& Cell( int x,int y ) const
+	{
+		assert( IsInsideBoard( x,y ) );
+		return (*iter)->board[GRID_WIDTH * y + x];
 	}
 	bool IsInsideBoard( int x,int y ) const
 	{
@@ -50,6 +56,7 @@ public:
 
 	void StepForward();
 	void StepBackward();
+	void EditCell( const Vec2& mousePos,bool eraser );
 	void Draw( Graphics& gfx ) const;
 
 	RectF GetRect() const;

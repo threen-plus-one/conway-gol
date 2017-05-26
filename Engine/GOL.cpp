@@ -97,6 +97,13 @@ void GOL::StepBackward()
 	}
 }
 
+void GOL::EditCell( const Vec2& mousePos,bool eraser )
+{
+	const Vec2 cell = (mousePos - Vec2( float( GRID_X ),float( GRID_Y ) )) / float( CELL_SIZE + PADDING );
+	assert( IsInsideBoard( int( cell.x ),int( cell.y ) ) );
+	Cell( int( cell.x ),int( cell.y ) ) = !eraser;
+}
+
 void GOL::Draw( Graphics& gfx ) const
 {
 	const RectF rect = GetRect();

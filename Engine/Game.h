@@ -53,5 +53,7 @@ private:
 	float stepTimer = 0.0f;
 	float stepPeriod = 1.0f;
 	bool paused = true;
+
+	bool eraser = false;
 	/********************************/
 };
